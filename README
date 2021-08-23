@@ -1,0 +1,23 @@
+This project is a Twitter clone.
+
+Stack is including:
+
+Back end:
+- TypeScript
+- Node.js/Express
+- MongoDB/Mongoose
+- InversifyJS
+- Passport, OAuth, OIDC, JWT
+- Casbin
+- Redis
+- Elasticsearch
+- Swagger
+- Postman
+- Docker
+- Nginx 
+-
+
+Front end:
+- TypeScript
+- Vue
+- 
