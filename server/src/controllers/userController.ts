@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
+import { UserService } from "../services";
 
 const login = (req: Request, res: Response) => {
-  res.send("resp from user controller");
+  const userService = new UserService();
+  userService.login();
+  res.send("Done.");
 };
 
 const register = (req: Request, res: Response) => {};

@@ -1,12 +1,24 @@
 import express from "express";
-import configs from "./configs";
+import { envs } from "./configs";
+import { connectToDB } from "./db";
 import routers from "./routers";
+import { LogService } from "./services";
 
-const app = express();
-const { PORT } = configs;
+const { PORT } = envs;
+const { log, error } = LogService;
 
-app.use(routers);
+connectToDB()
+  .then(() => startServer())
+  .catch((err) => {
+    error(err);
+  });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT} ...`);
-});
+const startServer = () => {
+  const app = express();
+  app.use(routers);
+
+  app.listen(PORT, () => {
+    log(`Server running on port: ${PORT} ...`);
+    return app;
+  });
+};

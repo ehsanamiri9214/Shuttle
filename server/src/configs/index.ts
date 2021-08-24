@@ -1,11 +1,3 @@
-import dotenv from "dotenv";
+import envs from "./env";
 
-dotenv.config();
-
-const configs = {
-  ENV: process.env.ENV,
-  PORT: process.env.PORT,
-  DB_URL: process.env.DB_URL,
-};
-
-export default configs;
+export { envs };
