@@ -1,15 +1,17 @@
 import express, { Request, Response } from "express";
 import { check } from "express-validator";
 import { userController } from "../controllers";
-import { validationMiddleware } from "../middlewares";
+import { authMiddleware, validationMiddleware } from "../middlewares";
 
 const router = express.Router();
 const { login, register, logout, removeAccount } = userController;
 const { validate } = validationMiddleware;
+const { isGuest, isAuthenticated } = authMiddleware;
 
 router.post(
   "/login",
   [
+    isGuest,
     check("username").isLength({ min: 3 }).escape(),
     check("password").isLength({ min: 8 }),
     validate,
@@ -20,6 +22,7 @@ router.post(
 router.post(
   "/register",
   [
+    isGuest,
     check("firstName").isLength({ min: 3 }).escape(),
     check("lastName").isLength({ min: 3 }).escape(),
     check("username").isLength({ min: 3 }).escape(),
@@ -31,8 +34,8 @@ router.post(
   register
 );
 
-router.post("/logout", logout);
+router.post("/logout", isAuthenticated, logout);
 
-router.post("/removeAccount", removeAccount);
+router.post("/removeAccount", isAuthenticated, removeAccount);
 
 export default router;
