@@ -1,6 +1,6 @@
 This project is a Twitter clone.
 
-Stack is including:
+Stack including:
 
 Back end:
 - TypeScript
@@ -14,7 +14,6 @@ Back end:
 - Swagger
 - Postman
 - Docker
-- Nginx 
 -
 
 Front end:
