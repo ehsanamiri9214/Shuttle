@@ -5,7 +5,7 @@ import routers from "./routers";
 import { LogService } from "./services";
 
 const { PORT } = envs;
-const { log, error } = LogService;
+const { log, error } = new LogService();
 
 connectToDB()
   .then(() => startServer())
@@ -15,7 +15,10 @@ connectToDB()
 
 const startServer = () => {
   const app = express();
-  app.use(routers);
+  app
+    .use(express.json())
+    .use(express.urlencoded({ extended: true }))
+    .use(routers);
 
   app.listen(PORT, () => {
     log(`Server running on port: ${PORT} ...`);

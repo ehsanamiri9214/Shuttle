@@ -3,7 +3,7 @@ import { envs } from "./configs";
 import { LogService } from "./services";
 
 const { DB_URL } = envs;
-const { log } = LogService;
+const { log } = new LogService();
 let connection: Connection, db:object;
 
 const connectToDB = async () => {
