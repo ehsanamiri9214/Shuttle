@@ -1,25 +1,44 @@
+import { Request, Response } from "express";
 import { db } from "../db";
 import { User } from "../models";
+import AuthService from "./authService";
+import LogService from "./logService";
 
 class UserService {
-  constructor() {}
+  private authService;
+  private logService;
 
-  async login() {
-    console.log("UserService login called.");
+  constructor() {
+    this.authService = new AuthService();
+    this.logService = new LogService();
   }
 
-  async register() {
-    // let userModel = new User({
-    //   firstName: "Esi",
-    //   lastName: "Sth",
-    // });
+  async login(username: string, password: string) {
+    try {
+      const user = await User.find({
+        username,
+        password,
+      });
+      const tokens = this.authService.authenticate();
+      return tokens;
+    } catch (err) {
+      throw err;
+    }
+  }
 
-    // try {
-    //   await userModel.save();
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    console.log("UserService register called.");
+  async register(username: string, password: string) {
+    try {
+      let userModel = new User({
+        username,
+        password,
+      });
+      const user = await userModel.save();
+      const tokens = this.authService.authenticate();
+      return tokens;
+    } catch (err) {
+      this.logService.error(err);
+      throw err;
+    }
   }
 
   logout() {}

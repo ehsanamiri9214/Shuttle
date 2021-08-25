@@ -1,25 +1,32 @@
 import { Request, Response } from "express";
-import { UserService } from "../services";
+import { AuthService, UserService } from "../services";
 
-const login = (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
   try {
     // @TODO: Check user exists.
     // @TODO: Return token.
+    const authService = new AuthService();
     const userService = new UserService();
-    userService.login();
-    res.send("Done.");
+    const user = await userService.login(req.body.username, req.body.password);
+    const tokens = authService.authenticate();
+    res.send(tokens);
   } catch (err) {
     res.sendStatus(500);
   }
 };
 
-const register = (req: Request, res: Response) => {
+const register = async (req: Request, res: Response) => {
   try {
     // @TODO: Create user.
     // @TODO: Return token.
+    const authService = new AuthService();
     const userService = new UserService();
-    userService.register();
-    res.send("Done.");
+    const user = await userService.register(
+      req.body.username,
+      req.body.password
+    );
+    const tokens = authService.authenticate();
+    res.send(tokens);
   } catch (err) {
     res.sendStatus(500);
   }

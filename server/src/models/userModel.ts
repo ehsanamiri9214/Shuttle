@@ -14,12 +14,10 @@ let userSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    unique: true,
     required: false,
   },
   email: {
     type: String,
-    unique: true,
     required: false,
   },
 });

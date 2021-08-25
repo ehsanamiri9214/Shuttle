@@ -23,12 +23,12 @@ router.post(
   "/register",
   [
     isGuest,
-    check("firstName").isLength({ min: 3 }).escape(),
-    check("lastName").isLength({ min: 3 }).escape(),
+    // check("firstName").isLength({ min: 3 }).escape(),
+    // check("lastName").isLength({ min: 3 }).escape(),
     check("username").isLength({ min: 3 }).escape(),
     check("password").isLength({ min: 8 }),
-    check("phone").isMobilePhone("fa-IR"),
-    check("email").isEmail().normalizeEmail(),
+    // check("phone").isMobilePhone("fa-IR"),
+    // check("email").isEmail().normalizeEmail(),
     validate,
   ],
   register

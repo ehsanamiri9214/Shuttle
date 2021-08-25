@@ -1,4 +1,5 @@
+import AuthService from "./authService";
 import LogService from "./logService";
 import UserService from "./userService";
 
-export { LogService, UserService };
+export { AuthService, LogService, UserService };
