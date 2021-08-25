@@ -3,8 +3,6 @@ import { AuthService, UserService } from "../services";
 
 const login = async (req: Request, res: Response) => {
   try {
-    // @TODO: Check user exists.
-    // @TODO: Return token.
     const authService = new AuthService();
     const userService = new UserService();
     const user = await userService.login(req.body.username, req.body.password);
@@ -17,8 +15,6 @@ const login = async (req: Request, res: Response) => {
 
 const register = async (req: Request, res: Response) => {
   try {
-    // @TODO: Create user.
-    // @TODO: Return token.
     const authService = new AuthService();
     const userService = new UserService();
     const user = await userService.register(
