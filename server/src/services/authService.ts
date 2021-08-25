@@ -1,22 +1,21 @@
-import { ObjectId } from "mongoose";
-import IAuthService from "./IAuthService";
-import { Token } from "../models";
+import jwt from "jsonwebtoken";
+import { envs } from "../configs";
+import UserService from "./userService";
 
-class AuthService implements IAuthService {
-  constructor() {}
+class AuthService {
+  private userService;
 
-  authenticate(userId: ObjectId) {
-    return {
-      accessToken: "accessToken",
-      refreshToken: "refreshToken",
-    };
+  constructor() {
+    this.userService = new UserService();
   }
 
-  reAuthenticate(userId: ObjectId) {
-    return {
-      accessToken: "accessToken",
-      refreshToken: "refreshToken",
-    };
+  async login(username: string, password: string) {}
+
+  async register(username: string, password: string) {
+    const err = new Error();
+    err.name = "400";
+    err.message = "User is not found.";
+    throw err;
   }
 
   logout() {}

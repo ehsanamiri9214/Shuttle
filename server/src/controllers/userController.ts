@@ -1,36 +1,36 @@
-import { Request, Response } from "express";
-import { AuthService, UserService, LogService } from "../services";
+import { Request, Response, NextFunction } from "express";
+import { AuthService } from "../services";
 
 class UserController {
-  private logService;
   private authService;
-  private userService;
 
   constructor() {
-    this.logService = new LogService();
     this.authService = new AuthService();
-    this.userService = new UserService();
   }
 
   async login(req: Request, res: Response) {
     try {
-      const user = await this.userService.get(req.body);
-      const tokens = this.authService.authenticate(user._id);
-      res.send(tokens);
+      const { username, password } = req.body;
+      const tokens = this.authService.login(username, password);
+      res.json(tokens);
     } catch (err) {
-      this.logService.error(err);
       res.sendStatus(500);
     }
   }
 
-  async register(req: Request, res: Response) {
+  async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.userService.create(req.body);
-      const tokens = this.authService.authenticate(user._id);
-      res.send(tokens);
+      // const err = new Error();
+      // err.name = ERRORS.NOT_FOUND.name;
+      // err.message = "User is not found.";
+      // // next(err);
+      // throw err;
+      const { username, password } = req.body;
+      const tokens = await this.authService.register(username, password);
+      // res.json(tokens);
     } catch (err) {
-      this.logService.error(err);
-      res.sendStatus(500);
+      next(err);
+      // res.sendStatus(500);
     }
   }
 

@@ -1,12 +1,9 @@
 import { User } from "../models";
-import LogService from "./logService";
 import { encrypt } from "../utils";
 
 class UserService {
-  private logService;
 
   constructor() {
-    this.logService = new LogService();
   }
 
   async getAll() {
@@ -14,8 +11,13 @@ class UserService {
     return users;
   }
 
-  async get({ username, password }: { username: string; password: string }) {
-    const user = await User.findOne({ username, password });
+  async getById(userId: string) {
+    const user = await User.findById(userId);
+    return user;
+  }
+
+  async getByUserName(username: string) {
+    const user = await User.findOne({ username });
     return user;
   }
 
