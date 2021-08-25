@@ -1,21 +1,20 @@
 import jwt from "jsonwebtoken";
 import { envs } from "../configs";
-import UserService from "./userService";
+import { ErrorService, UserService } from ".";
 
 class AuthService {
+  private errorService;
   private userService;
 
   constructor() {
+    this.errorService = new ErrorService();
     this.userService = new UserService();
   }
 
   async login(username: string, password: string) {}
 
   async register(username: string, password: string) {
-    const err = new Error();
-    err.name = "400";
-    err.message = "User is not found.";
-    throw err;
+    this.errorService.throw(400, "User could not be found.");
   }
 
   logout() {}

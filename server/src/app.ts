@@ -14,10 +14,9 @@ const startServer = () => {
     .use(express.urlencoded({ extended: true }))
     .use(routers)
     .use((err: Error, req: Request, res: Response, next: NextFunction) => {
-      res.status(!isNaN(+err.name) ? +err.name : 500);
-      res.json({
+      res.status(!isNaN(+err.name) ? +err.name : 500).json({
         error: {
-          message: err.message,
+          message: !!err.message ? err.message : "Something went wrong!",
         },
       });
     });

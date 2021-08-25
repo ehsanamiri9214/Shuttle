@@ -5,10 +5,11 @@ Back end:
 - Node.js/Express
 - MongoDB/Mongoose
 - InversifyJS
-- Passport, OAuth, OIDC, JWT
+- JWT
 - Casbin
 - Redis
 - Elasticsearch
+- Morgan
 - Swagger
 - Postman
 - Docker
