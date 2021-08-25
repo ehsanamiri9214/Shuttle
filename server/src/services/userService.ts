@@ -1,5 +1,3 @@
-import { Request, Response } from "express";
-import { db } from "../db";
 import { User } from "../models";
 import LogService from "./logService";
 
@@ -10,7 +8,9 @@ class UserService {
     this.logService = new LogService();
   }
 
-  async login(username: string, password: string) {
+  async getAll() {}
+
+  async get(username: string, password: string) {
     try {
       const user = await User.find({
         username,
@@ -22,7 +22,7 @@ class UserService {
     }
   }
 
-  async register(username: string, password: string) {
+  async create(username: string, password: string) {
     try {
       let userModel = new User({
         username,
@@ -36,9 +36,9 @@ class UserService {
     }
   }
 
-  logout() {}
+  update() {}
 
-  removeAccount() {}
+  remove() {}
 }
 
 export default UserService;

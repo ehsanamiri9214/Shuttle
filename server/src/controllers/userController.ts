@@ -5,7 +5,7 @@ const login = async (req: Request, res: Response) => {
   try {
     const authService = new AuthService();
     const userService = new UserService();
-    const user = await userService.login(req.body.username, req.body.password);
+    const user = await userService.get(req.body.username, req.body.password);
     const tokens = authService.authenticate();
     res.send(tokens);
   } catch (err) {
@@ -17,7 +17,7 @@ const register = async (req: Request, res: Response) => {
   try {
     const authService = new AuthService();
     const userService = new UserService();
-    const user = await userService.register(
+    const user = await userService.create(
       req.body.username,
       req.body.password
     );
