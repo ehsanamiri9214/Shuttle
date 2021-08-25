@@ -1,35 +1,44 @@
 import { Request, Response } from "express";
-import { AuthService, UserService } from "../services";
+import { AuthService, UserService, LogService } from "../services";
 
-const login = async (req: Request, res: Response) => {
-  try {
-    const authService = new AuthService();
-    const userService = new UserService();
-    const user = await userService.get(req.body.username, req.body.password);
-    const tokens = authService.authenticate();
-    res.send(tokens);
-  } catch (err) {
-    res.sendStatus(500);
+class UserController {
+  private logService;
+  private authService;
+  private userService;
+
+  constructor() {
+    this.logService = new LogService();
+    this.authService = new AuthService();
+    this.userService = new UserService();
   }
-};
 
-const register = async (req: Request, res: Response) => {
-  try {
-    const authService = new AuthService();
-    const userService = new UserService();
-    const user = await userService.create(
-      req.body.username,
-      req.body.password
-    );
-    const tokens = authService.authenticate();
-    res.send(tokens);
-  } catch (err) {
-    res.sendStatus(500);
+  async login(req: Request, res: Response) {
+    try {
+      const user = await this.userService.get(req.body);
+      const tokens = this.authService.authenticate(user._id);
+      res.send(tokens);
+    } catch (err) {
+      this.logService.error(err);
+      res.sendStatus(500);
+    }
   }
-};
 
-const logout = (req: Request, res: Response) => {};
+  async register(req: Request, res: Response) {
+    try {
+      const user = await this.userService.create(req.body);
+      const tokens = this.authService.authenticate(user._id);
+      res.send(tokens);
+    } catch (err) {
+      this.logService.error(err);
+      res.sendStatus(500);
+    }
+  }
 
-const removeAccount = (req: Request, res: Response) => {};
+  refreshToken(req: Request, res: Response) {}
 
-export default { login, register, logout, removeAccount };
+  logout(req: Request, res: Response) {}
+
+  removeAccount(req: Request, res: Response) {}
+}
+
+export default UserController;

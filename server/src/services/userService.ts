@@ -1,5 +1,6 @@
 import { User } from "../models";
 import LogService from "./logService";
+import { encrypt } from "../utils";
 
 class UserService {
   private logService;
@@ -8,32 +9,21 @@ class UserService {
     this.logService = new LogService();
   }
 
-  async getAll() {}
-
-  async get(username: string, password: string) {
-    try {
-      const user = await User.find({
-        username,
-        password,
-      });
-      return user;
-    } catch (err) {
-      throw err;
-    }
+  async getAll() {
+    const users = await User.find({});
+    return users;
   }
 
-  async create(username: string, password: string) {
-    try {
-      let userModel = new User({
-        username,
-        password,
-      });
-      const user = await userModel.save();
-      return user;
-    } catch (err) {
-      this.logService.error(err);
-      throw err;
-    }
+  async get({ username, password }: { username: string; password: string }) {
+    const user = await User.findOne({ username, password });
+    return user;
+  }
+
+  async create({ username, password }: { username: string; password: string }) {
+    const hashedPass = await encrypt.hash(password);
+    const userModel = new User({ username, password: hashedPass });
+    const user = await userModel.save();
+    return user;
   }
 
   update() {}

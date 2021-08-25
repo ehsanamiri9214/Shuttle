@@ -1,5 +1,5 @@
 import { consoleColors } from "../constants";
-const { Reset, BgRed } = consoleColors;
+const { Reset, FgRed } = consoleColors;
 
 class LogService {
   constructor() {}
@@ -13,7 +13,7 @@ class LogService {
   warn() {}
 
   error(err: string) {
-    console.log(BgRed, err, Reset);
+    console.log(FgRed, err, Reset);
   }
 }
 

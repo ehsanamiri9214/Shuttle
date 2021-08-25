@@ -1,3 +1,4 @@
+import Token from "./tokenModel";
 import User from "./userModel";
 
-export { User };
+export { Token, User };

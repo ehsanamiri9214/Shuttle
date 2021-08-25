@@ -1,12 +1,15 @@
 import express, { Request, Response } from "express";
 import { check } from "express-validator";
-import { userController } from "../controllers";
+import { UserController } from "../controllers";
 import { authMiddleware, validationMiddleware } from "../middlewares";
 
 const router = express.Router();
-const { login, register, logout, removeAccount } = userController;
+
 const { validate } = validationMiddleware;
 const { isGuest, isAuthenticated } = authMiddleware;
+
+const userController = new UserController();
+const { login, register, refreshToken, logout, removeAccount } = userController;
 
 router.post(
   "/login",
@@ -16,7 +19,7 @@ router.post(
     check("password").isLength({ min: 8 }),
     validate,
   ],
-  login
+  login.bind(userController)
 );
 
 router.post(
@@ -31,11 +34,17 @@ router.post(
     // check("email").isEmail().normalizeEmail(),
     validate,
   ],
-  register
+  register.bind(userController)
 );
 
-router.post("/logout", isAuthenticated, logout);
+router.post("/refreshToken", refreshToken.bind(userController));
 
-router.post("/removeAccount", isAuthenticated, removeAccount);
+router.post("/logout", isAuthenticated, logout.bind(userController));
+
+router.post(
+  "/removeAccount",
+  isAuthenticated,
+  removeAccount.bind(userController)
+);
 
 export default router;

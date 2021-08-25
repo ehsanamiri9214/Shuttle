@@ -16,6 +16,8 @@
   "author": "Ehsan Amiri - Email: Ehsanamiri9214@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
