@@ -9,7 +9,7 @@ const { validate } = validationMiddleware;
 const { isGuest, isAuthenticated } = authMiddleware;
 
 const userController = new UserController();
-const { login, register, refreshToken, logout, removeAccount } = userController;
+const { login, register, refreshToken, removeAccount } = userController;
 
 router.post(
   "/login",
@@ -38,8 +38,6 @@ router.post(
 );
 
 router.post("/refreshToken", refreshToken.bind(userController));
-
-router.post("/logout", isAuthenticated, logout.bind(userController));
 
 router.post(
   "/removeAccount",

@@ -8,35 +8,27 @@ class UserController {
     this.authService = new AuthService();
   }
 
-  async login(req: Request, res: Response) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { username, password } = req.body;
-      const tokens = this.authService.login(username, password);
+      const tokens = await this.authService.login(username, password);
       res.json(tokens);
     } catch (err) {
-      res.sendStatus(500);
+      next(err);
     }
   }
 
   async register(req: Request, res: Response, next: NextFunction) {
     try {
-      // const err = new Error();
-      // err.name = ERRORS.NOT_FOUND.name;
-      // err.message = "User is not found.";
-      // // next(err);
-      // throw err;
       const { username, password } = req.body;
       const tokens = await this.authService.register(username, password);
-      // res.json(tokens);
+      res.json(tokens);
     } catch (err) {
       next(err);
-      // res.sendStatus(500);
     }
   }
 
   refreshToken(req: Request, res: Response) {}
-
-  logout(req: Request, res: Response) {}
 
   removeAccount(req: Request, res: Response) {}
 }

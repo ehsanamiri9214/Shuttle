@@ -1,9 +1,11 @@
 import { User } from "../models";
 import { encrypt } from "../utils";
+import { ErrorService } from ".";
 
 class UserService {
-
+  private errorService;
   constructor() {
+    this.errorService = new ErrorService();
   }
 
   async getAll() {
@@ -21,11 +23,15 @@ class UserService {
     return user;
   }
 
-  async create({ username, password }: { username: string; password: string }) {
-    const hashedPass = await encrypt.hash(password);
-    const userModel = new User({ username, password: hashedPass });
-    const user = await userModel.save();
-    return user;
+  async create(username: string, password: string) {
+    try {
+      const hashedPass = await encrypt.hash(password);
+      const userModel = new User({ username, password: hashedPass });
+      const user = await userModel.save();
+      return user;
+    } catch (err) {
+      this.errorService.throw(500, "Could not create user.");
+    }
   }
 
   update() {}
