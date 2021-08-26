@@ -2,14 +2,12 @@ import { ObjectId } from "mongoose";
 import jwt from "jsonwebtoken";
 import { encrypt } from "../utils";
 import { envs } from "../configs";
-import { ErrorService, UserService } from ".";
+import { UserService } from ".";
 
 class AuthService {
-  private errorService;
   private userService;
 
   constructor() {
-    this.errorService = new ErrorService();
     this.userService = new UserService();
   }
 
@@ -24,9 +22,9 @@ class AuthService {
         };
         return tokens;
       }
-      throw new Error();
+      throw new Error("Unauthorized.");
     } catch (err) {
-      this.errorService.throw(500, "Login error.");
+      throw err;
     }
   }
 
@@ -40,9 +38,9 @@ class AuthService {
         };
         return tokens;
       }
-      throw new Error();
+      throw new Error("Could not create user.");
     } catch (err) {
-      this.errorService.throw(500, "Register error.");
+      throw err;
     }
   }
 

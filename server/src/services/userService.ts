@@ -1,12 +1,9 @@
+import { Types } from "mongoose";
 import { User } from "../models";
 import { encrypt } from "../utils";
-import { ErrorService } from ".";
 
 class UserService {
-  private errorService;
-  constructor() {
-    this.errorService = new ErrorService();
-  }
+  constructor() {}
 
   async getAll() {
     const users = await User.find({});
@@ -30,7 +27,7 @@ class UserService {
       const user = await userModel.save();
       return user;
     } catch (err) {
-      this.errorService.throw(500, "Could not create user.");
+      throw err;
     }
   }
 
