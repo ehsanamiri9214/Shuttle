@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { User } from "../models";
-import { encrypt } from "../utils";
+import { encrypt } from "../helpers";
 import { CustomError } from "../types";
 
 class UserService {

@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose";
 import jwt from "jsonwebtoken";
-import { encrypt } from "../utils";
+import { encrypt } from "../helpers";
 import { envs } from "../configs";
 import { UserService } from ".";
 import { CustomError } from "../types";
