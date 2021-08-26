@@ -1,5 +1,5 @@
 import mongoose, { Connection } from "mongoose";
-import { envs } from "./configs";
+import { envs } from "../configs";
 
 const { DB_URL } = envs;
 let connection: Connection, db: object;

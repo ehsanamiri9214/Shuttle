@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
-import routers from "./routers";
-import { errorHandlerMiddleware } from "./middlewares";
-import { envs } from "./configs";
+import routers from "../routers";
+import { errorHandlerMiddleware } from "../middlewares";
+import { envs } from "../configs";
 
 const startServer = () => {
   const { PORT } = envs;
