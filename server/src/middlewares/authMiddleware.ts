@@ -26,6 +26,8 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
     } catch (err) {
       res.sendStatus(401);
     }
+  } else {
+    res.sendStatus(401);
   }
 };
 

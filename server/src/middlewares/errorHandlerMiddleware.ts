@@ -1,16 +1,24 @@
 import express, { NextFunction, Request, Response } from "express";
+import { CustomError } from "../types";
 
 const errorHandler = (
-  err: Error,
+  err: Error | CustomError,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  res.status(500).json({
-    error: {
-      message: !!err.message ? err.message : "Something went wrong!",
-    },
-  });
+  if (err instanceof CustomError) {
+    const { status, message } = err;
+    console.log("CustomError: ", status + " " + message);
+    res.status(status).json({
+      type: "error",
+      status,
+      message,
+    });
+  } else {
+    console.log("DefaultError: ", err);
+    res.status(500).send("Sth went wrong!");
+  }
 };
 
 export default errorHandler;

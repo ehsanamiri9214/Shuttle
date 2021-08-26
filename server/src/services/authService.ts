@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { encrypt } from "../utils";
 import { envs } from "../configs";
 import { UserService } from ".";
+import { CustomError } from "../types";
 
 class AuthService {
   private userService;
@@ -21,8 +22,9 @@ class AuthService {
           refreshToken: this.generateToken(user._id, true),
         };
         return tokens;
+      } else {
+        throw new CustomError(400, "Wrong credentials.");
       }
-      throw new Error("Unauthorized.");
     } catch (err) {
       throw err;
     }
@@ -31,14 +33,11 @@ class AuthService {
   async register(username: string, password: string) {
     try {
       const user = await this.userService.create(username, password);
-      if (user) {
-        const tokens = {
-          accessToken: this.generateToken(user._id),
-          refreshToken: this.generateToken(user._id, true),
-        };
-        return tokens;
-      }
-      throw new Error("Could not create user.");
+      const tokens = {
+        accessToken: this.generateToken(user._id),
+        refreshToken: this.generateToken(user._id, true),
+      };
+      return tokens;
     } catch (err) {
       throw err;
     }
