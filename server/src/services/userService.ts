@@ -1,8 +1,9 @@
-import { Types } from "mongoose";
+import {Service } from "typedi";
 import { User } from "../models";
 import { encrypt } from "../helpers";
 import { CustomError } from "../types";
 
+@Service()
 class UserService {
   constructor() {}
 

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { connectToDB } from "./db";
 import startServer from "./app";
 

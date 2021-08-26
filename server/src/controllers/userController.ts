@@ -1,17 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { Service } from "typedi";
 import { envs } from "../configs";
 import { AuthService, UserService } from "../services";
 import { CustomError } from "../types";
 
+@Service()
 class UserController {
-  private authService;
-  private userService;
-
-  constructor() {
-    this.authService = new AuthService();
-    this.userService = new UserService();
-  }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService
+  ) {}
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {

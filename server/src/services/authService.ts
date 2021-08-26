@@ -1,16 +1,14 @@
 import { ObjectId } from "mongoose";
+import { Service } from "typedi";
 import jwt from "jsonwebtoken";
 import { encrypt } from "../helpers";
 import { envs } from "../configs";
-import { UserService } from ".";
+import UserService from "./userService";
 import { CustomError } from "../types";
 
+@Service()
 class AuthService {
-  private userService;
-
-  constructor() {
-    this.userService = new UserService();
-  }
+  constructor(private readonly userService: UserService) {}
 
   async login(username: string, password: string) {
     try {
