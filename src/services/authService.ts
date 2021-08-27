@@ -1,5 +1,4 @@
-import { Request } from "express";
-import { ObjectId, Schema } from "mongoose";
+import { ObjectId } from "mongoose";
 import { Service } from "typedi";
 import jwt from "jsonwebtoken";
 import { encrypt } from "../helpers";
@@ -37,20 +36,6 @@ class AuthService {
         refreshToken: this.generateToken(user._id, true),
       };
       return tokens;
-    } catch (err) {
-      throw err;
-    }
-  }
-
-  refreshToken(req: Request) {
-    try {
-      const { SECRET_KEY } = envs;
-      const refreshToken = req.headers.refreshtoken as string;
-      const { userId } = jwt.verify(refreshToken, SECRET_KEY) as {
-        userId: string;
-      };
-      const token = this.generateToken(new Schema.Types.ObjectId(userId));
-      return token;
     } catch (err) {
       throw err;
     }

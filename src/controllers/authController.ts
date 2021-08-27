@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
+import { Schema } from "mongoose";
 import { Service } from "typedi";
+import jwt from "jsonwebtoken";
+import { envs } from "../configs";
 import { AuthService } from "../services";
 import { CustomError } from "../types";
 
@@ -33,7 +36,14 @@ class UserController {
 
   refreshToken(req: Request, res: Response, next: NextFunction) {
     try {
-      const token = this.authService.refreshToken(req);
+      const { SECRET_KEY } = envs;
+      const refreshToken = req.headers.refreshtoken as string;
+      const { userId } = jwt.verify(refreshToken, SECRET_KEY) as {
+        userId: string;
+      };
+      const token = this.authService.generateToken(
+        new Schema.Types.ObjectId(userId)
+      );
       res.json({ accessToken: token });
     } catch (err) {
       next(err);
