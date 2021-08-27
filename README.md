@@ -1,13 +1,14 @@
 Stack including:
 
 - TypeScript
-- Node.js/Express
+- Node/Express
 - MongoDB/Mongoose
 - TypeDI
 - JWT
 - Casbin
 - Redis
 - Elasticsearch
+- WebSocket
 - Morgan
 - Swagger
 - Postman
