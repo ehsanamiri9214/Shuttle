@@ -1,10 +1,9 @@
 Stack including:
 
-Back end:
 - TypeScript
 - Node.js/Express
 - MongoDB/Mongoose
-- InversifyJS
+- TypeDI
 - JWT
 - Casbin
 - Redis
@@ -14,8 +13,3 @@ Back end:
 - Postman
 - Docker
 -
-
-Front end:
-- TypeScript
-- Vue
-- 
