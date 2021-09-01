@@ -1,5 +1,6 @@
 import { Service } from "typedi";
 import { Post } from "../models";
+import { CustomError } from "../types";
 
 @Service()
 class PostService {
@@ -12,8 +13,11 @@ class PostService {
     }
   }
 
-  async get() {
+  async get(postId: string) {
     try {
+      const post = await Post.findById(postId);
+      if (!post) throw new CustomError(404, "Post not found.");
+      return post;
     } catch (err) {
       throw err;
     }

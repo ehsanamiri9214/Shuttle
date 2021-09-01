@@ -12,7 +12,7 @@ const { validate } = validationMiddleware;
 const postController = Container.get(PostController);
 const { get, create, update, remove } = postController;
 
-router.get("", isAuthenticated, get.bind(postController));
+router.get("/:postId", isAuthenticated, get.bind(postController));
 
 router.post(
   "",

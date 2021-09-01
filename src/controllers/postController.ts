@@ -10,6 +10,8 @@ class PostController {
 
   async get(req: Request, res: Response, next: NextFunction) {
     try {
+      const post = await this.postService.get(req.params.postId);
+      res.json(post);
     } catch (err) {
       next(err);
     }
