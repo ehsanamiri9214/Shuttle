@@ -1,4 +1,4 @@
-import {Service } from "typedi";
+import { Service } from "typedi";
 import { User } from "../models";
 import { encrypt } from "../helpers";
 import { CustomError } from "../types";
@@ -6,16 +6,6 @@ import { CustomError } from "../types";
 @Service()
 class UserService {
   constructor() {}
-
-  async getAll() {
-    try {
-      const users = await User.find({});
-      if (!users) throw new CustomError(404, "No user found.");
-      return users;
-    } catch (err) {
-      throw err;
-    }
-  }
 
   async getById(userId: string) {
     try {
@@ -53,6 +43,20 @@ class UserService {
   update() {}
 
   remove() {}
+
+  async updatePost() {
+    try {
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async removePost() {
+    try {
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 export default UserService;
