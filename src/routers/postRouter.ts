@@ -25,7 +25,7 @@ router.post(
 );
 
 router.put(
-  "",
+  "/:postId",
   [
     isAuthenticated,
     check("body").isLength({ min: 3, max: 150 }).escape(),
@@ -34,6 +34,6 @@ router.put(
   update.bind(postController)
 );
 
-router.delete("", isAuthenticated, remove.bind(postController));
+router.delete("/:postId", isAuthenticated, remove.bind(postController));
 
 export default router;

@@ -18,9 +18,9 @@ class PostController {
   }
 
   async create(req: Request, res: Response, next: NextFunction) {
-    const accessToken = req.headers.authorization!;
-    const { SECRET_KEY } = envs;
     try {
+      const accessToken = req.headers.authorization!;
+      const { SECRET_KEY } = envs;
       const { userId } = jwt.verify(accessToken, SECRET_KEY) as {
         userId: string;
       };
@@ -33,6 +33,11 @@ class PostController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
+      const post = await this.postService.update(
+        req.params.postId,
+        req.body.body
+      );
+      res.json(post);
     } catch (err) {
       next(err);
     }
@@ -40,6 +45,13 @@ class PostController {
 
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
+      const accessToken = req.headers.authorization!;
+      const { SECRET_KEY } = envs;
+      const { userId } = jwt.verify(accessToken, SECRET_KEY) as {
+        userId: string;
+      };
+      const removed = await this.postService.remove(req.params.postId, userId);
+      if (removed) res.json("Post removed successfully.");
     } catch (err) {
       next(err);
     }

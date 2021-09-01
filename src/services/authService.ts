@@ -44,7 +44,7 @@ class AuthService {
   generateToken(userId: ObjectId, isRefresh: boolean = false) {
     const { SECRET_KEY } = envs;
     const token = jwt.sign({ userId }, SECRET_KEY, {
-      expiresIn: isRefresh ? "72h" : "2h",
+      expiresIn: isRefresh ? "72h" : "24h",
     });
     return token;
   }
