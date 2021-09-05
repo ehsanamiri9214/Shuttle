@@ -1,4 +1,5 @@
+import Follow from "./followModel";
 import Post from "./postModel";
 import User from "./userModel";
 
-export { Post, User };
+export { Follow, Post, User };

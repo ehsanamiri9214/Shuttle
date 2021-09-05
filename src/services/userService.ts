@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import { User } from "../models";
+import { Follow, User } from "../models";
 import { encrypt } from "../helpers";
 import { CustomError } from "../types";
 
@@ -44,6 +44,8 @@ class UserService {
 
   remove() {}
 
+  // *******************************************************************************
+
   async updatePost() {
     try {
     } catch (err) {
@@ -57,6 +59,45 @@ class UserService {
       throw err;
     }
   }
+
+  // *******************************************************************************
+
+  async follow(sourceId: string, targetId: string) {
+    try {
+      const sourceUser = await User.findById(sourceId);
+      const targetUser = await User.findById(targetId);
+      if (!sourceUser || !targetUser) {
+        throw new CustomError(404, "User doesn't exist.");
+      }
+      const alreadyFollowing = await Follow.findOne({ sourceId, targetId });
+      if (alreadyFollowing) {
+        return;
+      }
+      const followModel = new Follow({ sourceId, targetId });
+      const result = await followModel.save();
+      return;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async unfollow(sourceId: string, targetId: string) {
+    try {
+      const sourceUser = await User.findById(sourceId);
+      const targetUser = await User.findById(targetId);
+      if (!sourceUser || !targetUser) {
+        throw new CustomError(404, "User doesn't exist.");
+      }
+      await Follow.findOneAndDelete({ sourceId, targetId });
+      return;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async getNumOfFollowers() {}
+
+  async getFollowers() {}
 }
 
 export default UserService;

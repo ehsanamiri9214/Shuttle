@@ -10,8 +10,20 @@ const { validate } = validationMiddleware;
 const { isGuest, isAuthenticated } = authMiddleware;
 
 const userController = Container.get(UserController);
-const { getMe } = userController;
+const { getMe, follow, unfollow } = userController;
 
 router.get("/me", isAuthenticated, getMe.bind(userController));
+
+router.post(
+  "/follow",
+  [isAuthenticated, check("targetId").notEmpty().escape(), validate],
+  follow.bind(userController)
+);
+
+router.post(
+  "/unfollow",
+  [isAuthenticated, check("targetId").notEmpty().escape(), validate],
+  unfollow.bind(userController)
+);
 
 export default router;
