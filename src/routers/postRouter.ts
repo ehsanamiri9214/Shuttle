@@ -4,7 +4,7 @@ import { check } from "express-validator";
 import { PostController } from "../controllers";
 import { authMiddleware, validationMiddleware } from "../middlewares";
 
-const router = express.Router();
+const router = express.Router({ caseSensitive: true });
 
 const { isAuthenticated } = authMiddleware;
 const { validate } = validationMiddleware;

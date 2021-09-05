@@ -8,7 +8,7 @@ import {
   validationMiddleware,
 } from "../middlewares";
 
-const router = express.Router();
+const router = express.Router({ caseSensitive: true });
 
 const { isGuest, isAuthenticated } = authMiddleware;
 const { hasRefreshToken } = refreshTokenMiddleware;

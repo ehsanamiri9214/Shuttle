@@ -95,9 +95,27 @@ class UserService {
     }
   }
 
-  async getNumOfFollowers() {}
+  async getNumOfFollowers(userId: string) {
+    try {
+      const numOfFollowers = await Follow.countDocuments({
+        targetId: userId,
+      });
+      return numOfFollowers;
+    } catch (err) {
+      throw err;
+    }
+  }
 
-  async getFollowers() {}
+  async getFollowers(userId: string) {
+    try {
+      const followers = await Follow.find({ targetId: userId }).populate(
+        "sourceId"
+      );
+      return followers;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 export default UserService;
